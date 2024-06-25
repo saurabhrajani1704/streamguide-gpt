@@ -33,7 +33,6 @@ const Login = () => {
           }).then(() => {
             // Profile updated!
             // ...
-            navigate('/browse');
           }).catch((error) => {
             // An error occurred
             // ...

@@ -2,8 +2,14 @@ import React from 'react'
 import { signOut } from 'firebase/auth';
 import { auth } from '../utils/firebase';
 import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { onAuthStateChanged } from 'firebase/auth';
+import { useDispatch } from 'react-redux';
+import { addUser, removeUser } from '../utils/userSlice';
+
 
 const Header = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleSignOut = () => {
     signOut(auth).then(() => {
@@ -12,6 +18,19 @@ const Header = () => {
       console.log(error);
     });
   }
+  useEffect(() => {
+    //This is to check if the user is already signed in
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+           const {uid,email,displayName} = user;
+           dispatch(addUser({uid:uid,email:email,displayName:displayName}));
+           navigate('/browse');
+        } else {
+            dispatch(removeUser());
+            navigate('/');
+        }
+    });
+}, []);
 
   return (
     <div>
