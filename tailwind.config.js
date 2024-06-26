@@ -2,9 +2,19 @@
 module.exports = {
   content: [],
   theme: {
-    extend: {},
+    extend: {
+      colors:{
+        scrollbar:{
+          track: '#1a1a1a',
+          thumb: '#888888',
+          'thumb-hover': '#555555',
+        }
+      }
+    },
   },
-  plugins: [],
+  plugins: [
+    require('tailwind-scrollbar')
+  ],
 }
 /** @type {import('tailwindcss').Config} */
 module.exports = {
